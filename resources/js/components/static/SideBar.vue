@@ -21,7 +21,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/">
             <i class="material-icons">content_paste</i>
-              <p>SİPARİŞLER</p>
+              <p>ORDERS</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -33,37 +33,42 @@
           <li class="nav-item ">
             <a class="nav-link" href="./notifications.html">
                <i class="material-icons">shopping_basket</i>
-              <p>ÜRÜNLER</p>
+              <p>PRODUCT</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./user.html">
+              <router-link
+            tag="li"
+            to="/admin/site-uyeler"
+            class="nav-item"
+           
+          >
+             <a class="nav-link">
               <i class="material-icons">person</i>
-              <p>ÜYELER</p>
+              <p>CUSTOMER</p>
             </a>
-          </li>
+          </router-link>
           <li class="nav-item ">
             <a class="nav-link" href="./user.html">
               <i class="material-icons">rate_review</i>
-              <p>YORUMLAR</p>
+              <p>COMMENTS</p>
             </a>
           </li>
           <router-link
             tag="li"
             to="/admin/site-ayarlari"
             class="nav-item"
+            
            
-            :class="{ active: isActive }"
           >
              <a class="nav-link">
               <i class="material-icons">settings</i>
-              <p  @click="isActive=true">SİTE AYARLARI</p>
+              <p>WEB SİTE SETTİNGS</p>
             </a>
           </router-link>
            <li class="nav-item ">
             <a class="nav-link" href="./user.html">
               <i class="material-icons">menu</i>
-              <p>MENÜLER</p>
+              <p>MENUS</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -99,7 +104,7 @@
            <li class="nav-item ">
             <a class="nav-link" href="./user.html">
               <i class="material-icons">admin_panel_settings</i>
-              <p>YÖNETİCİLER</p>
+              <p>ADMİNİSTROTOR</p>
             </a>
           </li>
           
@@ -146,13 +151,18 @@
 export default {
   data(){
     return {
-      isActive:false
     }
   }
 
 }
 </script>
 
-<style>
+<style scoped>
+ nav li:hover,
+ nav li.router-link-active,
+ nav li.router-link-exact-active {
+   background-color: indianred;
+   cursor: pointer;
+ }
 
 </style>

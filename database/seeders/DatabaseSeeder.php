@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         
 
 
-       $this->call(SiteAyarlariSeeder::class);
+       //$this->call(SiteAyarlariSeeder::class);
 
 
 

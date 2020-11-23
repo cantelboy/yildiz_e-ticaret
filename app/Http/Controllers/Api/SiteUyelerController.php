@@ -82,6 +82,12 @@ class SiteUyelerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteUyeler = SiteUyeler::find($id);
+        if($deleteUyeler->count()){
+          $deleteUyeler->delete();
+          return response()->json(['message' => 'Başarılı bir şekilde silinmiştir' , 'success'=> true]);
+        } else {
+          return response()->json(['message'=>'Silinme sırasında hata oluştu..!', 'success'=> false]);
+        }
     }
 }
