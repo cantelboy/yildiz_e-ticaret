@@ -17,19 +17,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        \App\Models\SiteUyeler::create([
-            'IsimSoyisim' => Str::random(10),
-            'TelefonNumarasi' =>Str::random(11),
-            'Cinsiyet' =>'male',
-            'Durumu' => '1',
-            'SilinmeDurumu'=>0,
-            'KayitTarihi' =>1120,
-            'KayitIpAdresi' => '::1',
-            'AktivasyonKodu' => Str::random(5),
-            'EmailAdresi' =>'info@yildizticaret.com',
-            'Sifre' => '11223', // password
-        ]);
+     
+            //USER CREATE YORUM SATIRINDA KAPALI KULLANILACAĞI ZAMAN AÇILACAKTIR...!
+
+
+        //   \App\Models\User::factory(10)->create();
+
+       
+     
+
+
+         \App\Models\SiteUyeler::factory(10)->create();
+
         // \App\Models\User::create([
         //     'name' => 'kadir',
         //     'email' => 'kadiryildiz@hotmail.com.tr',
@@ -37,7 +36,12 @@ class DatabaseSeeder extends Seeder
         //     'password' =>Hash::make('11223344'), // password
         //     'remember_token' => Str::random(10),
         // ]);
-        $this->call(SiteAyarlariSeeder::class);
+        
+
+
+       $this->call(SiteAyarlariSeeder::class);
+
+
 
     }
 }

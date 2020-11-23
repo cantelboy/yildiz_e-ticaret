@@ -16,7 +16,7 @@ class CreateSiteUyelersTable extends Migration
         Schema::create('site_uyelers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('EmailAdresi',50);
-            $table->string('Sifre',50);
+            $table->string('Sifre');
             $table->string('IsimSoyisim',50);
             $table->string('TelefonNumarasi',50);
             $table->string('Cinsiyet',50);
