@@ -24,3 +24,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::Resource('admin/site-ayarlari', 'App\Http\Controllers\Api\SiteAyarlariController');
 Route::Resource('admin/site-adresler', 'App\Http\Controllers\Api\SiteAdreslerController');
 Route::Resource('admin/site-uyeler', 'App\Http\Controllers\Api\SiteUyelerController');
+Route::Resource('admin/site-contract', 'App\Http\Controllers\Api\SiteContractController');

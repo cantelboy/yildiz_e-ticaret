@@ -77,12 +77,16 @@
               <p>BANKA HESAP AYARLARI</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./user.html">
+           <router-link
+            tag="li"
+            to="/admin/site-contract"
+            class="nav-item"
+          >
+             <a class="nav-link">
               <i class="material-icons">thumb_up_alt</i>
-              <p>SÖZLEŞMELER VE METİN</p>
+              <p>Contacts</p>
             </a>
-          </li>
+          </router-link>
            <li class="nav-item ">
             <a class="nav-link" href="./user.html">
               <i class="material-icons">local_shipping</i>
