@@ -289,7 +289,7 @@ export default {
           UrunResmiBir   : this.productAdd.productPicture[0],
           UrunResmiIki   : this.productAdd.productPicture[1],
           UrunResmiUc    : this.productAdd.productPicture[2],
-          UrunResmiDort  : this.productAdd[3],
+          UrunResmiDort  : this.productAdd.productPicture[3],
           VaryantBasligi : this.productAdd.variantTitle,
           VaryantAdi     : this.productAdd.variantName1,
           StokAdedi      : this.productAdd.variantStock1,

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\SiteMenu;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -42,24 +44,34 @@ class SiteProductController extends Controller
      */
     public function store(Request $request)
     {
-    
-    
-    
-    $productAdd = Product::join('product_variants', 'product_variants.UrunId', '=', 'products.id')
-    ->join('site_menus','site_menus.UrunTuru', '=', 'products.UrunTuru')
-    ->where('site_menus.id', $request->MenuId)
-    ->get();
 
-    foreach($productAdd as $product){
-               
-     if($product->MenuId == $request->MenuId){
+        //request ile file gelen resim dosyasını yakalamaya bakılacak
+        $file = $request->file('file');
+        dd($file);
+        die();
+    
+  
+    $productMenuIdSelected = SiteMenu::where('id', $request->MenuId)->get();
 
-                        
+  
+
+    foreach($productMenuIdSelected as $product){
+
+        if($product->UrunTuru == "Erkek Ayakkabısı"){
+            $ResimKlasoru	=	"UrunResimleri/Erkek/";
+        }elseif($product->UrunTuru == "Kadın Ayakkabısı"){
+            $ResimKlasoru	=	"UrunResimleri/Kadin/";
+        }elseif($product->UrunTuru == "Çocuk Ayakkabısı"){
+            $ResimKlasoru	=	"UrunResimleri/Cocuk/";
+        }   
+
+     if($product->id == $request->MenuId){
+
         $input = $request->only(['MenuId','UrunTuru','UrunAdi','UrunFiyati','ParaBirimi','KdvOrani','UrunAciklamasi','UrunResmiBir','UrunResmiIki','UrunResmiUc','UrunResmiDort',
         'VaryantBasligi','KargoUcreti','Durumu','ToplamSatisSayisi','YorumSayisi','ToplamYorumPuani','GoruntulenmeSayisi']);
 
        if($input){
-    
+      
         $MenuId          = $request->MenuId;
         $UrunAdi         = $request->UrunAdi;
         $UrunFiyati      = $request->UrunFiyati;
@@ -75,27 +87,33 @@ class SiteProductController extends Controller
         $VaryantAdi      = $request->VaryantAdi;
         $KargoUcreti     = $request->KargoUcreti;
         $StokAdedi       = $request->StokAdedi;
-
-    
  
         $ProductCreate = Product::create(['MenuId' => $MenuId, 'UrunTuru'=> $product->UrunTuru, 'UrunAdi'=> $UrunAdi, 'UrunFiyati'=>$UrunFiyati,'ParaBirimi'=>$ParaBirimi,'KdvOrani'=>$KdvOrani,'KargoUcreti'=>$KargoUcreti,
             'UrunAciklamasi'=>$UrunAciklamasi,'UrunResmiBir'=>$UrunResmiBir,'UrunResmiIki'=>$UrunResmiIki,'UrunResmiUc'=>$UrunResmiUc,'UrunResmiDort'=>$UrunResmiDort, 'Durumu'=> 1,'VaryantBasligi'=>$VaryantBasligi,
-        
-            
             
         ]);
 
         if($ProductCreate->count()){
-           
+
+                $id = Product::all()->last()->id;
+
+                $image       = $request->input('file');
+                $filename    = Product::find($id)->UrunAdi . time() . '.jpg';
+                $image_resize = Image::make($image->getRealPath());
+                $image_resize->resize(600, 800);
+                $image_resize->save(public_path('upload/'.$ResimKlasoru . $filename));
+             
+         
             $menuProductCountUpdate = SiteMenu::find($MenuId);
             if($menuProductCountUpdate->count()){
-                $menuProductCountUpdate->update(['UrunSayisi',+1]);
+                $menuProductCountUpdate->where('id', $MenuId)->update(['UrunSayisi' => DB::raw('UrunSayisi +1')]);
 
                 $id = Product::all()->last()->id;
 
                 $prdouctVariantCreate = ProductVariant::create(['UrunId'=>$id, 'VaryantAdi'=> $VaryantAdi,'StokAdedi'=>$StokAdedi]);
     
                 if($prdouctVariantCreate->count()){
+               
                    return response()->json(['success'=> true, 'message'=> 'Varyant Kayıtları yapıldı..!']);
                 }else{
                     return response()->json(['success'=> false, 'error'=> 'Varyant Kayıt işlemi sırasında bir hata oluştu', 203]); 
@@ -107,7 +125,6 @@ class SiteProductController extends Controller
             } 
         }    
 
-
         return response()->json(['success'=> true, 'message'=> 'Kayıt yapıldı..!']);
           
        }else{
@@ -115,15 +132,10 @@ class SiteProductController extends Controller
           return response()->json(['success'=> false, 'error'=> 'birhata oluştu', 203]);
 
         }
-
-                      
       }
         
-      
-
      }
                 
-
     }
 
     /**
