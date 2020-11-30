@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SiteMenu extends Model
 {
     use HasFactory;
+    protected $fillable = ['UrunTuru','MenuAdi','UrunSayisi'];
     
 }
+

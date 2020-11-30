@@ -27,19 +27,19 @@ class DatabaseSeeder extends Seeder
      
 
 
-         \App\Models\SiteUyeler::factory(10)->create();
+        //  \App\Models\SiteUyeler::factory(10)->create();
 
-        // \App\Models\User::create([
-        //     'name' => 'kadir',
-        //     'email' => 'kadiryildiz@hotmail.com.tr',
-        //     'email_verified_at' => now(),
-        //     'password' =>Hash::make('11223344'), // password
-        //     'remember_token' => Str::random(10),
-        // ]);
+        \App\Models\User::create([
+            'name' => 'kadir',
+            'email' => 'kadiryildiz@hotmail.com.tr',
+            'email_verified_at' => now(),
+            'password' =>Hash::make('11223344'), // password
+            'remember_token' => Str::random(10),
+        ]);
         
 
 
-       //$this->call(SiteAyarlariSeeder::class);
+       $this->call(SiteAyarlariSeeder::class);
 
 
 

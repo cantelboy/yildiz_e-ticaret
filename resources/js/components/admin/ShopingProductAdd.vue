@@ -225,17 +225,17 @@ export default {
       activeImg:false,
       siteMenusData:[],
       productAdd:{
-        productMenu:"",  
-        productName:"",
-        productPrice:"",
-            currency:"",
-          productTax:"",
-          cargoPrice:"",
-         explanation:"",
-      productPicture:[],
-      variantTitle  :"",
-      variantName1:"",
-      variantStock1:"",
+        productMenu    : "",  
+        productName    : "",
+        productPrice   : "",
+        currency       : "",
+        productTax     : "",
+        cargoPrice     : "",
+        explanation    : "",
+        productPicture : [],
+        variantTitle   : "",
+        variantName1   : "",
+        variantStock1  : "",
       }
 
     }
@@ -244,7 +244,7 @@ export default {
     axios.get("/api/admin/site-product")
     .then(response=>{
       this.siteMenusData.push(response.data);
-     // console.log(this.siteMenusData)
+     console.log(this.siteMenusData)
     });
   },
   methods:{
@@ -275,8 +275,26 @@ export default {
    },
 
   SiteProductAdded(){
+      console.log(this.productAdd);
       var data = this.productAdd
-      axios.post("/api/admin/site-product", data)
+      axios.post("/api/admin/site-product",{ 
+          MenuId         : this.productAdd.productMenu,
+          UrunTuru       : this.productAdd.productMenu,
+          UrunAdi        : this.productAdd.productName,
+          UrunFiyati     : this.productAdd.productPrice,
+          ParaBirimi     : this.productAdd.currency,
+          KdvOrani       : this.productAdd.productTax,
+          KargoUcreti    : this.productAdd.cargoPrice,
+          UrunAciklamasi : this.productAdd.explanation,
+          UrunResmiBir   : this.productAdd.productPicture[0],
+          UrunResmiIki   : this.productAdd.productPicture[1],
+          UrunResmiUc    : this.productAdd.productPicture[2],
+          UrunResmiDort  : this.productAdd[3],
+          VaryantBasligi : this.productAdd.variantTitle,
+          VaryantAdi     : this.productAdd.variantName1,
+          StokAdedi      : this.productAdd.variantStock1,
+       
+      })
       .then(response=>{
           console.log(response);
       });
