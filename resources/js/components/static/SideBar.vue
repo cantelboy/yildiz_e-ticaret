@@ -30,18 +30,21 @@
               <p>HAVALE BİLDİRİMLERİ</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./notifications.html">
-               <i class="material-icons">shopping_basket</i>
-              <p>PRODUCT</p>
+           <router-link
+            tag="li"
+            to="/admin/site-product"
+            class="nav-item"
+           >
+             <a class="nav-link">
+              <i class="material-icons">shopping_basket</i>
+              <p>PRODUCTS</p>
             </a>
-          </li>
-              <router-link
+          </router-link>
+           <router-link
             tag="li"
             to="/admin/site-uyeler"
             class="nav-item"
-           
-          >
+           >
              <a class="nav-link">
               <i class="material-icons">person</i>
               <p>CUSTOMER</p>

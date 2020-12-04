@@ -8,8 +8,10 @@ use App\Models\SiteMenu;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
+
 
 
 class SiteProductController extends Controller
@@ -21,8 +23,8 @@ class SiteProductController extends Controller
      */
     public function index()
     {
-       
-    
+
+
         return SiteMenu::all();
     }
 
@@ -45,146 +47,121 @@ class SiteProductController extends Controller
     public function store(Request $request)
     {
 
-        //request ile file gelen resim dosyasını yakalamaya bakılacak
+        $rules = [
+            'MenuId'         => 'required',
+            'UrunTuru'       => 'required',
+            'UrunAdi'        => 'required',
+            'UrunFiyati'     => 'required',
+            'ParaBirimi'     => 'required',
+            'KdvOrani'       => 'required',
+            'UrunAciklamasi' => 'required',
+            'VaryantBasligi' => 'required',
+            'KargoUcreti'    => 'required',
+            'VaryantAdi'     => 'required',
+            'StokAdedi'      => 'required',
+            'files'          => 'required',
+        ];
 
-        //product variant işlemi tamam explode edildikden sonra count() değerini aldık ve for loop iteration yapıldı..!
-        
-      $results1 = $request->StokAdedi;
-      $variants1 = explode(',', $results1); 
-        
-      $results2 = $request->VaryantAdi;
-      $variants2 = explode(',', $results2);
-
-      $id = Product::all()->last()->id;
-
-     for($i = 0; $i < count($variants2); $i++){
-       
-        $prdouctVariantCreate = ProductVariant::create(['UrunId'=>$id, 'VaryantAdi'=> $variants2[$i],'StokAdedi'=>$variants1[$i]]);
-     }
-      
+        $input = $request->only([
+            'MenuId', 'UrunTuru', 'UrunAdi', 'UrunFiyati', 'ParaBirimi', 'KdvOrani', 'UrunAciklamasi', 'UrunResmiBir',
+            'VaryantBasligi', 'KargoUcreti', 'StokAdedi', 'VaryantAdi', 'files'
+        ]);
 
 
-       
-      
 
-  
-        
-    
-    
+        $validator = Validator::make($input, $rules);
 
-      
-        
-        
-        die();
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->messages()], 203);
+        }
 
-  
-      $productMenuIdSelected = SiteMenu::where('id', $request->MenuId)->get();
+        $productMenuIdSelected = SiteMenu::where('id', $request->MenuId)->get();
 
-        foreach($productMenuIdSelected as $product){
+        foreach ($productMenuIdSelected as $product) {
 
-            if($product->UrunTuru == "Erkek Ayakkabısı"){
-                $ResimKlasoru	=	"UrunResimleri/Erkek/";
-            }elseif($product->UrunTuru == "Kadın Ayakkabısı"){
-                $ResimKlasoru	=	"UrunResimleri/Kadin/";
-            }elseif($product->UrunTuru == "Çocuk Ayakkabısı"){
-                $ResimKlasoru	=	"UrunResimleri/Cocuk/";
-            }   
-        if($product->id == $request->MenuId){
+            if ($product->UrunTuru == "Erkek Ayakkabısı") {
+                $ResimKlasoru    =    "UrunResimleri/Erkek/";
+            } elseif ($product->UrunTuru == "Kadın Ayakkabısı") {
+                $ResimKlasoru    =    "UrunResimleri/Kadin/";
+            } elseif ($product->UrunTuru == "Çocuk Ayakkabısı") {
+                $ResimKlasoru    =    "UrunResimleri/Cocuk/";
+            }
+            if ($product->id == $request->MenuId) {
 
-          
-            $input = $request->only(['MenuId','UrunTuru','UrunAdi','UrunFiyati','ParaBirimi','KdvOrani','UrunAciklamasi','UrunResmiBir','UrunResmiIki','UrunResmiUc','UrunResmiDort',
-            'VaryantBasligi','KargoUcreti','Durumu','ToplamSatisSayisi','YorumSayisi','ToplamYorumPuani','GoruntulenmeSayisi']);
+                $MenuId          = $request->MenuId;
+                $UrunAdi         = $request->UrunAdi;
+                $UrunFiyati      = $request->UrunFiyati;
+                $ParaBirimi      = $request->ParaBirimi;
+                $KdvOrani        = $request->KdvOrani;
+                $KargoUcreti     = $request->KargoUcreti;
+                $UrunAciklamasi  = $request->UrunAciklamasi;
+                $VaryantBasligi  = $request->VaryantBasligi;
+                $KargoUcreti     = $request->KargoUcreti;
 
-        if($input){
-           
-            $MenuId          = $request->MenuId;
-            $UrunAdi         = $request->UrunAdi;
-            $UrunFiyati      = $request->UrunFiyati;
-            $ParaBirimi      = $request->ParaBirimi;
-            $KdvOrani        = $request->KdvOrani;
-            $KargoUcreti     = $request->KargoUcreti;
-            $UrunAciklamasi  = $request->UrunAciklamasi;
-            $VaryantBasligi  = $request->VaryantBasligi;
-            $VaryantAdi      = $request->VaryantAdi;
-            $KargoUcreti     = $request->KargoUcreti;
-            $StokAdedi       = $request->StokAdedi;
-    
-            $ProductCreate = Product::create(['MenuId' => $MenuId, 'UrunTuru'=> $product->UrunTuru, 'UrunAdi'=> $UrunAdi, 'UrunFiyati'=>$UrunFiyati,'ParaBirimi'=>$ParaBirimi,'KdvOrani'=>$KdvOrani,'KargoUcreti'=>$KargoUcreti,
-                'UrunAciklamasi'=>$UrunAciklamasi, 'Durumu'=> 1,'VaryantBasligi'=>$VaryantBasligi,
-                
-            ]);
+                $ProductCreate = Product::create([
+                    'MenuId' => $MenuId, 'UrunTuru' => $product->UrunTuru, 'UrunAdi' => $UrunAdi, 'UrunFiyati' => $UrunFiyati, 'ParaBirimi' => $ParaBirimi, 'KdvOrani' => $KdvOrani, 'KargoUcreti' => $KargoUcreti,
+                    'UrunAciklamasi' => $UrunAciklamasi, 'Durumu' => 1, 'VaryantBasligi' => $VaryantBasligi,
+                ]);
 
-            if($ProductCreate->count()){
-               
+                if ($ProductCreate->count()) {
 
-            if(count($request->files)){
+                    if (count($request->files)) {
 
-                $result = $request->files;
+                        $result = $request->files;
+                        foreach ($result as $imgs) {
 
-                foreach($result as $imgs){
-                    for ($i = 0; $i < count($imgs); $i++) {
-
-                    $filename    = Str::of($request->UrunAdi)->slug('-').time().rand(1,50).'.jpg';
-        
-                    $image_resize = Image::make($imgs[$i]->getRealPath())->resize(300, 500)->save(public_path('upload/'.$ResimKlasoru.$filename));
-                        
-                      
-                        $UrunResmiDort = "";
-
-                        if($i === 0){
-                            $UrunResmiBir = $filename; 
-                        }elseif($i === 1){
-                            $UrunResmiIki = $filename;
-                        }elseif($i === 2){
-                            $UrunResmiUc = $filename;
-                        }elseif($i === 3){
-                            $UrunResmiDort = $filename;
-                        }else{
-                            return response()->json(['error'=> true, 'message'=> 'Enfaz her ürün için 4 resim yükleyebilirsiniz']);   
+                            for ($i = 0; $i < count($imgs); $i++) {
+                                $filename    = Str::of($request->UrunAdi)->slug('-') . time() . rand(1, 50) . '.jpg';
+                                $image_resize = Image::make($imgs[$i]->getRealPath())->resize(300, 500)->save(public_path('upload/' . $ResimKlasoru . $filename));
+                                $UrunResmiDort = "";
+                                if ($i === 0) {
+                                    $UrunResmiBir = $filename;
+                                } elseif ($i === 1) {
+                                    $UrunResmiIki = $filename;
+                                } elseif ($i === 2) {
+                                    $UrunResmiUc = $filename;
+                                } elseif ($i === 3) {
+                                    $UrunResmiDort = $filename;
+                                } else {
+                                    return response()->json(['error' => true, 'message' => 'Enfaz her ürün için 4 resim yükleyebilirsiniz']);
+                                }
+                            }
                         }
-        
+
+                        $UrunResmiDort ? $UrunResmiDort : $UrunResmiDort = null;
+
+                        $id = Product::all()->last()->id;
+                        $ProductCreate = Product::where('id', $id)->update(['UrunResmiBir' => $UrunResmiBir, 'UrunResmiIki' => $UrunResmiIki, 'UrunResmiUc' => $UrunResmiUc, 'UrunResmiDort' => $UrunResmiDort]);
                     }
-                    
-                } 
+                    $menuProductCountUpdate = SiteMenu::find($request->MenuId);
+                    if ($menuProductCountUpdate->count()) {
+                        $menuProductCountUpdate->where('id', $request->MenuId)->update(['UrunSayisi' => DB::raw('UrunSayisi +1')]);
 
-                $UrunResmiDort ? $UrunResmiDort : $UrunResmiDort = null;
+                        if (isset($request->StokAdedi) && isset($request->VaryantAdi)) {
+                            $results1 = $request->StokAdedi;
+                            $variants1 = explode(',', $results1);
 
-            
+                            $results2 = $request->VaryantAdi;
+                            $variants2 = explode(',', $results2);
 
-                $id = Product::all()->last()->id;
+                            for ($i = 0; $i < count($variants2); $i++) {
 
-                $ProductCreate = Product::where('id', $id)->update(['UrunResmiBir'=>$UrunResmiBir,'UrunResmiIki'=>$UrunResmiIki,'UrunResmiUc'=>$UrunResmiUc,'UrunResmiDort'=>$UrunResmiDort]);
-                
+                                $prdouctVariantCreate = ProductVariant::create(['UrunId' => $id, 'VaryantAdi' => $variants2[$i], 'StokAdedi' => $variants1[$i]]);
+                            }
+                        }
 
-            }    
-                $menuProductCountUpdate = SiteMenu::find($request->MenuId);
-                if($menuProductCountUpdate->count()){
-                    $menuProductCountUpdate->where('id', $request->MenuId)->update(['UrunSayisi' => DB::raw('UrunSayisi +1')]);
+                        if ($prdouctVariantCreate->count()) {
 
-                    $id = Product::all()->last()->id;
-
-                    $prdouctVariantCreate = ProductVariant::create(['UrunId'=>$id, 'VaryantAdi'=> $VaryantAdi,'StokAdedi'=>$StokAdedi]);
-        
-
-                    if($prdouctVariantCreate->count()){
-                
-                    return response()->json(['success'=> true, 'message'=> 'Ürün ekleme işlemi ve Varyant Kayıtları yapıldı..!']);
-                    }else{
-                        return response()->json(['success'=> false, 'error'=> 'Varyant Kayıt işlemi sırasında bir hata oluştu', 203]); 
+                            return response()->json(['success' => true, 'message' => 'required validete islemi başarılı..!']);
+                        } else {
+                            return response()->json(['success' => false, 'error' => 'Varyant Kayıt işlemi sırasında bir hata oluştu', 203]);
+                        }
+                    } else {
+                        return response()->json(['message' => 'Urunsayisi Urun Menu Güncelleme sırasında hata oluştu..!']);
                     }
-
-                    return response()->json(['message' => 'Urunsayisi Urun Menu başarılı bir şekilde Güncellenmiştir..!']);
-                } else {
-                return response()->json(['message'=>'Urunsayisi Urun Menu Güncelleme sırasında hata oluştu..!']);
-                } 
-            }  
-            
-            
-        }    
-        
-       } 
-     } 
-                
+                }
+            }
+        }
     }
 
     /**

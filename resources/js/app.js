@@ -5,11 +5,18 @@
  */
 
 require('./bootstrap');
+import Vuelidate from 'vuelidate'
 import router from './router/router'
 
-
-
 window.Vue = require('vue');
+
+Vue.use(Vuelidate);
+
+
+
+
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -34,5 +41,6 @@ Vue.component('parent-component', require('./components/ParentComponent.vue').de
 const app = new Vue({
     el: '#app',
    router,
+  
    
 });
