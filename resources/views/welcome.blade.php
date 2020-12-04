@@ -39,7 +39,9 @@
         </style>
     </head>
     <body class="antialiased">
+      
         <div id="app">
+            
             <parent-component></parent-component>
         </div>
     

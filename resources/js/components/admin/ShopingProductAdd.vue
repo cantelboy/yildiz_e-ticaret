@@ -1,7 +1,7 @@
 <template>
     <div>
         <form id="SiteAyarForm">
-            <table class="table">
+            <table class="table col-md-12">
                 <thead class=" text-primary">
                     <th>
                         Title
@@ -135,8 +135,9 @@
                                 <input
                                     type="file"
                                     class="custom-file-input"
-                                    id="customFile"
                                     @change="previewFiles"
+                                    accept="image/*"
+                                    name="images"
                                     multiple
                                 />
                                 <label
@@ -147,8 +148,8 @@
                             </div>
                         </td>
                         <td>
-                            <div id="blah" v-if="activeImg">
-                                <!-- <img  src="#" alt="your image" /> -->
+                            <div>
+                                <img v-for="image in images" :key="image.id" :src="image" width="50" height="100" class="preview">
                             </div>
                         </td>
                     </tr>
@@ -164,44 +165,66 @@
                                     placeholder="Varyant Başlığı Giriniz"
                                     v-model="productAdd.variantTitle"
                                     class="form-control"
-                                    
                                 />
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            1.varyant Adı
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input
-                                    alt="düzenleme için"
-                                    type="text"
-                                    placeholder="Varyant Başlığı Giriniz"
-                                    v-model="productAdd.variantName1"
-                                    class="form-control"
-                                    
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            1.varyant Stok Adeti
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input
-                                    alt="düzenleme için"
-                                    type="text"
-                                    placeholder="Varyant Başlığı Giriniz"
-                                    v-model="productAdd.variantStock1"
-                                    class="form-control"
-                                    
-                                />
-                            </div>
-                        </td>
+                          <div class="text-center">
+                            <button
+                                @click.prevent="increments++"
+                                class="btn btn-warning btn-sm"
+                            >
+                                Variant Add
+                            </button>
+                        </div>
+                          <div class="text-center">
+                            <button
+                                @click.prevent="ControlFunction"
+                                class="btn btn-danger btn-sm"
+                            >
+                                ControlFunction
+                            </button>
+                        </div>
+                        <table class="table col-md-12">
+                            <thead class=" text-primary">
+                            </thead>
+                            <tbody v-for="(item,index) in increments" :key="index">
+                            <tr style="float:left;">
+                                <td>
+                                    {{ index+1 }}.varyant Adı
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input
+                                            alt="düzenleme için"
+                                            type="text"
+                                            placeholder="Varyant Başlığı Giriniz"
+                                            v-model="productAdd.variantName[index]"
+                                            class="form-control"
+                                            
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="float:left;">
+                                <td>
+                                    {{ index+1 }}.varyant Stok Adeti
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input
+                                            alt="düzenleme için"
+                                            type="text"
+                                            placeholder="Varyant Başlığı Giriniz"
+                                            v-model="productAdd.variantStock[index]"
+                                            class="form-control"
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </tr>
                 </tbody>
             </table>
@@ -232,11 +255,14 @@ export default {
         productTax     : "",
         cargoPrice     : "",
         explanation    : "",
-        productPicture : [],
         variantTitle   : "",
-        variantName1   : "",
-        variantStock1  : "",
-      }
+        variantName    : [],
+        variantStock   : [],
+        file           : "",
+      },
+      attachment : [],
+      images:[],
+      increments:1,
 
     }
   },
@@ -244,40 +270,38 @@ export default {
     axios.get("/api/admin/site-product")
     .then(response=>{
       this.siteMenusData.push(response.data);
-     console.log(this.siteMenusData)
+     //console.log(this.siteMenusData)
     });
   },
+
   methods:{
-      previewFiles(event) {
 
-        if (event.target.files && event.target.files[0]) {
+   previewFiles(e) {
 
-          for(var i = 0; i < event.target.files.length; i++){
-         
-            this.productAdd.productPicture.push(event.target.files[i].name)
-            this.activeImg = true
-            var reader = new FileReader();
+      this.activeImg = true;  
+      this.attachment.push(event.target.files); 
+      this.images = [];
+      let fileList = Array.prototype.slice.call(e.target.files);
+      fileList.forEach(f => {
 
-            reader.onload = function (e) {
-            
-
-                $('#blah').prepend('<img id="theImg" src="" />');
-                $("img").attr('src', e.target.result)
-                    .width(150)
-                    .height(200);
-            };
-
-            reader.readAsDataURL(event.target.files[0]);
-
-          }
+        if(!f.type.match("image.*")) {
+          return;
         }
-      //console.log(event.target.files);
-   },
+
+        let reader = new FileReader();
+        let that = this;
+
+        reader.onload = function (e) {
+          that.images.push(e.target.result);
+        }
+        reader.readAsDataURL(f); 
+      });
+    },
 
   SiteProductAdded(){
-      console.log(this.productAdd);
-      var data = this.productAdd
-      axios.post("/api/admin/site-product",{ 
+      console.log(this.productAdd.variantName);
+   
+      var data =       {
           MenuId         : this.productAdd.productMenu,
           UrunTuru       : this.productAdd.productMenu,
           UrunAdi        : this.productAdd.productName,
@@ -286,30 +310,59 @@ export default {
           KdvOrani       : this.productAdd.productTax,
           KargoUcreti    : this.productAdd.cargoPrice,
           UrunAciklamasi : this.productAdd.explanation,
-          UrunResmiBir   : this.productAdd.productPicture[0],
-          UrunResmiIki   : this.productAdd.productPicture[1],
-          UrunResmiUc    : this.productAdd.productPicture[2],
-          UrunResmiDort  : this.productAdd.productPicture[3],
           VaryantBasligi : this.productAdd.variantTitle,
-          VaryantAdi     : this.productAdd.variantName1,
-          StokAdedi      : this.productAdd.variantStock1,
        
-      })
+      }
+
+     var variant = 
+      {
+       VaryantAdi  : this.productAdd.variantName,
+       StokAdedi   : this.productAdd.variantStock
+      }
+      
+     
+
+
+         var form = new FormData();   
+    //   form.append('Content-Type', 'multipart/form-data');  
+   
+    //   for (var i = 0; i< this.attachment[0].length; i++ ) {
+    //     form.append('files[' + i + ']', this.attachment[0][i]);
+    //     form.append('name[' + i + ']', this.attachment[0][i].name);
+    //   }
+ 
+      for (var key in data) {
+        form.append(key, data[key]);
+      }
+      for (var key in variant) {
+        form.append(key, variant[key]);
+      }
+      
+    
+      axios.post("/api/admin/site-product", form)
       .then(response=>{
-          console.log(response);
+          //console.log(response);
       });
 
+  },
+  ControlFunction(){
+      this.productAdd.variantName.forEach((value,key) => {
+            console.log(value)
+      });
+       this.productAdd.variantStock.forEach((value,key) => {
+           console.log(value)
+      });
+
+  
+  
   }
 
-
-
-
-
-
   }
-
 
 }
 </script>
 
 <style></style>
+
+
+

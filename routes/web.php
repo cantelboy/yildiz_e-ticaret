@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteUyerController;
 
@@ -22,10 +23,12 @@ use App\Http\Controllers\SiteUyerController;
 // //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+//Route::get('/admin/site-product', [App\Http\Controllers\HomeController::class, 'getIndex'])->name('getIndex');
 
 Route::get('{any}', function () {
     return view('welcome');
 })->where('any', '.*');
+
 
 
 

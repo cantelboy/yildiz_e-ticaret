@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    // public function getIndex()
+    // {
+    //     $categories ="string";
+    //     return view('welcome')->with('categories', $categories );
+    // }
 }
