@@ -15,7 +15,7 @@ class CreateProductVariantsTable extends Migration
     {
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
-            $table->integer('UrunId');
+            $table->integer('productId');
             $table->string('VaryantAdi',100);
             $table->integer('StokAdedi');
             $table->timestamps();

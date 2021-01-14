@@ -9,10 +9,15 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'MenuId','UrunTuru','UrunAdi','UrunFiyati','ParaBirimi','KdvOrani','UrunAciklamasi','UrunResmiBir','UrunResmiIki','UrunResmiUc','UrunResmiDort',
-        'VaryantBasligi','KargoUcreti','Durumu','ToplamSatisSayisi','YorumSayisi','ToplamYorumPuani','GoruntulenmeSayisi'
+        'MenuId','UrunAdi','UrunFiyati','ParaBirimi','KdvOrani','UrunAciklamasi','VaryantBasligi','KargoUcreti','Durumu','ToplamSatisSayisi','YorumSayisi','ToplamYorumPuani','GoruntulenmeSayisi'
 
     ];
+
+    public function variants()
+    {
+        return $this->hasMany('ProductVariant');
+
+    }
 }
 
 

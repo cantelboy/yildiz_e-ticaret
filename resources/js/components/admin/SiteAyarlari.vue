@@ -120,16 +120,17 @@ export default {
         };
     },
     created() {
-        axios.get("/api/admin/site-ayarlari").then(response => {
-            //console.log(this.SiteAyarlariData);
-            this.SiteAyarlariData.push(response.data.data[0]);
+        axios.get("/api/admin/settings").then(response => {
+            console.log("setting",response.data[0]);
+
+            this.SiteAyarlariData.push(response.data[0]);
         });
     },
     methods: {
         SiteAyarlariUpdated(event) {
             //  console.log(this.SiteAyarlariData[0])
             var data = this.SiteAyarlariData[0];
-            axios.put("/api/admin/site-ayarlari/1", data).then(response => {
+            axios.put("/api/admin/settings/1", data).then(response => {
                 console.log(response);
             });
         },

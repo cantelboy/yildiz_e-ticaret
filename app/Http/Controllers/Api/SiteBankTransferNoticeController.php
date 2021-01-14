@@ -14,7 +14,7 @@ class SiteBankTransferNoticeController extends Controller
      */
     public function index()
     {
-        //
+        dd('burasi');
     }
 
     /**

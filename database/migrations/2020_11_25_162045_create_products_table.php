@@ -16,16 +16,11 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->integer('MenuId');
-            $table->string('UrunTuru',100);
             $table->string('UrunAdi',255);
             $table->double('UrunFiyati');
             $table->char('ParaBirimi');
             $table->integer('KdvOrani');
             $table->text('UrunAciklamasi');
-            $table->string('UrunResmiBir',30);
-            $table->string('UrunResmiIki',30);
-            $table->string('UrunResmiUc',30);
-            $table->string('UrunResmiDort',30);
             $table->string('VaryantBasligi',100);
             $table->double('KargoUcreti');
             $table->tinyInteger('Durumu');

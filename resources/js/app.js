@@ -8,7 +8,17 @@ require('./bootstrap');
 import Vuelidate from 'vuelidate'
 import router from './router/router'
 
+
 window.Vue = require('vue');
+
+
+
+
+
+let Event = new Vue()
+window.Event = Event;
+
+
 
 Vue.use(Vuelidate);
 
@@ -41,6 +51,7 @@ Vue.component('parent-component', require('./components/ParentComponent.vue').de
 const app = new Vue({
     el: '#app',
    router,
+   
   
    
 });
