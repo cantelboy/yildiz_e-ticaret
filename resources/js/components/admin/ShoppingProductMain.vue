@@ -20,32 +20,21 @@
         </div>
     </div>
 </template>
-
 <script>
 export default {
     data() {
         return {
             ExData:[],
-            
-           
         }
     },
     mounted(){
-        /*axios.get("/api/admin/site-product").then(response => {
-          
+        /*axios.get("/api/admin/products").then(response => {
             this.ExData.push(response.data);
-          
-            
         });*/
-
-       
-
-       
-
         // Event.$on('productEditData', data => {
         //     //console.log(data);
         //     this.productEditData.push(data);
-         
+
         // })
     }
 };

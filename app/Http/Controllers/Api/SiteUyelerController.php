@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SiteUyeler;
-
+use App\Models\User;
 
 class SiteUyelerController extends Controller
 {
@@ -16,7 +15,8 @@ class SiteUyelerController extends Controller
      */
     public function index()
     {
-         return SiteUyeler::all();
+        $customers = User::orderByDesc('id')->get();
+        return $customers;
     }
 
     /**
@@ -82,8 +82,8 @@ class SiteUyelerController extends Controller
      */
     public function destroy($id)
     {
-        $deleteUyeler = SiteUyeler::find($id);
-        if($deleteUyeler->count()){
+        $deleteUyeler = User::find($id);
+        if($deleteUyeler->count() > 0){
           $deleteUyeler->delete();
           return response()->json(['message' => 'Başarılı bir şekilde silinmiştir' , 'success'=> true]);
         } else {

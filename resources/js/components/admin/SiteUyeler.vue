@@ -14,7 +14,7 @@
                             <table
                                 class="table"
                                 v-for="(customer, index) in CustomersData[0]"
-                                :key="customer.id"
+                                :key="CustomersData[0][index]['id']"
                             >
                                 <thead class="text-primary"></thead>
                                 <tbody>
@@ -37,10 +37,8 @@
                                                                 type="text"
                                                                 class="form-control"
                                                                 v-model="
-                                                                    CustomersData[0][
-                                                                        index
-                                                                    ][
-                                                                        'IsimSoyisim'
+                                                                    CustomersData[0][index][
+                                                                        'name'
                                                                     ]
                                                                 "
                                                                 disabled
@@ -64,31 +62,7 @@
                                                                     CustomersData[0][
                                                                         index
                                                                     ][
-                                                                        'EmailAdresi'
-                                                                    ]
-                                                                "
-                                                                disabled
-                                                            />
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
-                                                    >
-                                                        Telefon :
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <input
-                                                                alt="düzenleme için"
-                                                                type="text"
-                                                                class="form-control"
-                                                                v-model="
-                                                                    CustomersData[0][
-                                                                        index
-                                                                    ][
-                                                                        'TelefonNumarasi'
+                                                                        'email'
                                                                     ]
                                                                 "
                                                                 disabled
@@ -97,30 +71,6 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
-                                                    >
-                                                        Cinsiyet :
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <input
-                                                                alt="düzenleme için"
-                                                                type="text"
-                                                                class="form-control"
-                                                                v-model="
-                                                                    CustomersData[0][
-                                                                        index
-                                                                    ][
-                                                                        'Cinsiyet'
-                                                                    ]
-                                                                "
-                                                                disabled
-                                                            />
-                                                        </div>
-                                                    </td>
                                                     <td
                                                         style="
                                                             font-weight: bold;
@@ -138,31 +88,7 @@
                                                                     CustomersData[0][
                                                                         index
                                                                     ][
-                                                                        'KayitTarihi'
-                                                                    ]
-                                                                "
-                                                                disabled
-                                                            />
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
-                                                    >
-                                                        Kayıt IP :
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <input
-                                                                alt="düzenleme için"
-                                                                type="text"
-                                                                class="form-control"
-                                                                v-model="
-                                                                    CustomersData[0][
-                                                                        index
-                                                                    ][
-                                                                        'KayitIpAdresi'
+                                                                        'created_at'
                                                                     ]
                                                                 "
                                                                 disabled
@@ -207,23 +133,29 @@ export default {
     },
     methods: {
         loaded() {
-            console.log("Loaded");
-
-            axios.get("/api/admin/site-uyeler").then((response) => {
+            axios.get("/api/admin/customers").then((response) => {
                 this.CustomersData.push(response.data);
+              setTimeout(()=> {
+                console.log('data2',this.CustomersData2)
+              },1500)
+            }).catch((error)=> {
+              console.log('error',error)
             });
         },
         CustomerDelete(id) {
-            axios
-                .delete("/api/admin/site-uyeler/" + id, id)
+           axios.delete("/api/admin/customers/" + id, id)
                 .then((response) => {
-                    this.loaded();
                     if (response.data.success == true) {
                         console.log("Delete Success..!");
+                      this.loaded();
+                      this.$router.go();
+
                     } else {
                         console.log("Error Silme sırsasında hata");
                     }
-                });
+                }).catch((error)=> {
+             console.log('errorDeleteUser',error)
+           });
         },
     },
 };

@@ -1,6 +1,6 @@
 const menus = [
     {
-        MenuAdi: "erkek ayakkabisi",
+        name: "erkek ayakkabisi",
         UrunSayisi: null,
         created_at: null,
         id: 1,
@@ -8,7 +8,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Klasik Ayakkabılar",
+        name: "Klasik Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 2,
@@ -16,7 +16,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Kışlık Ayakkabılar",
+        name: "Kışlık Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 3,
@@ -24,7 +24,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Spor Ayakkabılar",
+        name: "Spor Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 4,
@@ -32,7 +32,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "kadin ayakkabisi",
+        name: "kadin ayakkabisi",
         UrunSayisi: null,
         created_at: null,
         id: 5,
@@ -40,7 +40,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Klasik ayakkabıları",
+        name: "Klasik ayakkabıları",
         UrunSayisi: 20,
         created_at: null,
         id: 6,
@@ -48,7 +48,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Spor Ayakkabılar",
+        name: "Spor Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 7,
@@ -56,7 +56,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Topuklu ayakkabıları",
+        name: "Topuklu ayakkabıları",
         UrunSayisi: 20,
         created_at: null,
         id: 8,
@@ -64,7 +64,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "cocuk ayakkabisi",
+        name: "cocuk ayakkabisi",
         UrunSayisi: null,
         created_at: null,
         id: 9,
@@ -72,7 +72,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Kışlık Ayakkabılar",
+        name: "Kışlık Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 10,
@@ -80,7 +80,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Spor Ayakkabılar",
+        name: "Spor Ayakkabılar",
         UrunSayisi: 20,
         created_at: null,
         id: 11,
@@ -88,7 +88,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "Cizgi Karakterler",
+        name: "Cizgi Karakterler",
         UrunSayisi: 20,
         created_at: null,
         id: 12,
@@ -96,7 +96,7 @@ const menus = [
         updated_at: null
     },
     {
-        MenuAdi: "sandalet yazılık ",
+        name: "sandalet yazılık ",
         UrunSayisi: 20,
         created_at: null,
         id: 13,
@@ -111,7 +111,7 @@ const total = menus.reduce((acc, menus) => {
         acc[key] = [];
     }
     acc[key].push(menus.id);
-    
+
     return acc;
 }, {}) //CHANGE: Make the initial "sum" be the object with each key with a zero value
 

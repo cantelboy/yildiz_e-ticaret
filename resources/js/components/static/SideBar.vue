@@ -11,9 +11,9 @@
           class="simple-text logo-normal"
           to="/admin"
         >
-       
+
           Admin Home
-        
+
         </router-link>
       </div>
       <div class="sidebar-wrapper">
@@ -32,7 +32,7 @@
           </li>
            <router-link
             tag="li"
-            to="/admin/site-product"
+            to="/admin/products"
             class="nav-item"
            >
              <a class="nav-link">
@@ -58,10 +58,8 @@
           </li>
           <router-link
             tag="li"
-            to="/admin/site-ayarlari"
+            to="/admin/settings"
             class="nav-item"
-            
-           
           >
              <a class="nav-link">
               <i class="material-icons">settings</i>

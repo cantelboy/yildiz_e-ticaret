@@ -16,11 +16,11 @@
                                 class="form-control"
                                 id="exampleFormControlSelect1"
                                 v-model="productAdd.productMenuSelect"
-                               
+
                             >
                                 <option selected disabled
                                     >Lütfen Menü Seçiniz</option
-                                > 
+                                >
                                 <option v-if="productAdd.productCategory" selected
                                     > {{ productAdd.productCategory }} --> {{ productAdd.productMenuName }}</option
                                 >
@@ -28,7 +28,7 @@
                                     :value="product.menu_Id + '-' + product.UrunTuru"
                                     v-for="(product,index) in productAdd.productMenu[0]" :key="index"
                                 >
-                                    {{ product.UrunTuru }} --> {{ product.MenuAdi }}
+                                    {{ product.UrunTuru }} --> {{ product.name }}
                                 </option>
                             </select>
                         </td>
@@ -140,7 +140,7 @@
                                     v-if="productAdd.productImages.length <= 4"
                                     id="iamge1"
                                     :src="getProductImage(productAdd.productImages[index])"
-                                    
+
                                     width="50"
                                     height="100"
                                     class="preview"
@@ -154,7 +154,7 @@
                                 >
                                     Delete
                                     <i class="material-icons"
-                                        >close</i 
+                                        >close</i
                                     >
                                 </button>
                             </div>
@@ -234,11 +234,11 @@
                                 >
                                     Delete
                                     <i class="material-icons"
-                                        >close</i 
+                                        >close</i
                                     >
                                 </button>
                             </tbody>
-                       
+
                         </table>
                     </tr>
                 </tbody>
@@ -287,8 +287,8 @@ export default {
             increments: 1,
             imageShow:true,
             productEditData:[],
-           
-            
+
+
         };
     },
 
@@ -311,9 +311,9 @@ export default {
                 this.productAdd.explanation      = response.data.product.UrunAciklamasi;
                 this.productAdd.variantTitle     = response.data.product.VaryantBasligi;
                 this.productAdd.variantTitle     = response.data.product.VaryantBasligi;
-                this.productAdd.productMenuName  = response.data.product.MenuAdi;
+                this.productAdd.productMenuName  = response.data.product.name;
                 this.productAdd.cargoPrice       = response.data.product.KargoUcreti;
-               
+
                 //product Image push process
                 this.productAdd.productImages.push(
                 this.productEditData[0].UrunResmiBir,
@@ -321,18 +321,18 @@ export default {
                 this.productEditData[0].UrunResmiUc,
                 this.productEditData[0].UrunResmiDort,
                   )
-                    
+
                 //variant data forEach loop
                 response.data[0].forEach((data,index)=>{
                     this.productAdd.variantStock.push(parseInt(data.StokAdedi));
                     this.productAdd.variantName.push(parseInt(data.VaryantAdi));
                 })
-                //product menu push process       
+                //product menu push process
                 this.productAdd.productMenu.push(response.data[1]);
-               
+
             });
        }
-    
+
     },
 
     methods: {
@@ -352,15 +352,15 @@ export default {
                 alert('Enfazla 4 resim ekleyebilirsiniz')
             }
 
-          
+
            //console.log(event.target.files);
 
            //console.log(fileData[0].length);
-                 
+
             this.images = [];
             let fileList = Array.prototype.slice.call(e.target.files);
 
-        
+
             //this.productAdd.productImages.push()
 
             fileList.forEach(f => {
@@ -374,13 +374,13 @@ export default {
                     that.images.push(e.target.result);
                 };
                 reader.readAsDataURL(f);
-                
+
             });
         },
 
         SiteProductAdded() {
 
-        
+
            // console.log(this.productAdd);
             //console.log(this.attachment);
 
@@ -410,14 +410,14 @@ export default {
         //     for (var key in data) {
         //         form.append(key, data[key]);
         //     }
-        //     axios.post("/api/admin/site-product", form).then(response => {
+        //     axios.post("/api/admin/products", form).then(response => {
         //         console.log(response);
         //     });
         },
         ControlFunction(e) {
             e.preventDefault();
         },
-      
+
         variantDelete(index){
             this.productAdd.variantName.splice(this.productAdd.variantName[index], 1)
             this.productAdd.variantStock.splice(this.productAdd.variantStock[index], 1)
@@ -430,7 +430,7 @@ export default {
 
             console.log(typeof img);
 
-           
+
             var base_url = window.location.origin;
             if(img !== null){
                  let ResimKlasoru;
@@ -452,7 +452,7 @@ export default {
         imageDelete(index)
         {
           this.productAdd.productImages.splice(this.productAdd.productImages[index], 1);
-          
+
         }
     }
 };

@@ -24,22 +24,11 @@ class SiteProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
-
     public function index()
     {
-
         $getMenus = $this->getMenus();
         $getProduct = $this->getProduct();
-        
-
-
         return response()->json(['success' => true, 'message' => 'ürünler ve ürün menu başarılı get', 'menu' => $getMenus, 'product' => $getProduct], 200);
-
-
-      
     }
 
     /**
@@ -61,7 +50,6 @@ class SiteProductController extends Controller
     public function store(Request $request)
     {
         //Product create process
-
         $validator = $this->productValidate($request);
 
         if ($validator->fails()) {
@@ -103,11 +91,11 @@ class SiteProductController extends Controller
             if (count($request->input('files')) > 0) {
                 $imageCreate = $this->createImage($request);
 
-              
+
                 if (isset($imageCreate)) {
                     //Product Variant ekleme işlemi
                     $productVariat = $this->createVariant($request);
-    
+
                     return response()->json(['success' => true, 'message' => 'ürün ekleme islemi başarılı bir şekilde kaydedilmiştir...!']);
                 } else {
                     return response()->json(['message' => 'Urunsayisi Urun Menu Güncelleme sırasında hata oluştu..!']);
@@ -280,7 +268,7 @@ class SiteProductController extends Controller
     {
         $parent_id = Category::where('id', $id)->first();
         $productMenuIdSelected = Category::where('id', $parent_id->parentId)->first();
-        $ResimKlasoru = "UrunResimleri/" . Str::slug($productMenuIdSelected->MenuAdi);
+        $ResimKlasoru = "UrunResimleri/" . Str::slug($productMenuIdSelected->name);
         return $ResimKlasoru;
     }
     //Product image public kalsorü için update function

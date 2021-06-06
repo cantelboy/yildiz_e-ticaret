@@ -1,25 +1,18 @@
 <template>
 <div>
   <div class="wrapper ">
-    <SideBar /> 
+    <SideBar />
     <div class="main-panel">
       <!-- Navbar -->
-      
-
       <NavBar />
-
     <div class="content">
-     
         <div class="container-fluid">
           <!-- Content İçerik alanı -->
          <router-view></router-view>
-          
         </div>
-    </div>     
+    </div>
      <Footer />
     </div>
-     
-    
   </div>
   <div class="fixed-plugin">
     <div class="dropdown show-dropdown" style="display:none">

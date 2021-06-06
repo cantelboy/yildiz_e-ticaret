@@ -23,11 +23,6 @@ window.Event = Event;
 Vue.use(Vuelidate);
 
 
-
-
-
-
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -51,7 +46,7 @@ Vue.component('parent-component', require('./components/ParentComponent.vue').de
 const app = new Vue({
     el: '#app',
    router,
-   
-  
-   
+
+
+
 });

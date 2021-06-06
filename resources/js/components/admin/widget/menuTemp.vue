@@ -1,6 +1,6 @@
 <template>
-    <optgroup :label="item.MenuAdi" value="">
-        <option v-for="altMenu in item.chield" :key="altMenu.id" :value="altMenu.id">{{altMenu.MenuAdi}}</option>
+    <optgroup :label="item.name" value="">
+        <option v-for="altMenu in item.chield" :key="altMenu.id" :value="altMenu.id">{{altMenu.name}}</option>
     </optgroup>
 </template>
 

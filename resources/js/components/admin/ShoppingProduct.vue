@@ -4,7 +4,7 @@
             <div class="text-right">
                 <router-link
                     tag="button"
-                    to="/admin/site-product/add"
+                    to="/admin/products/add"
                     class="btn btn-success btn-sm"
                 >
                     <i class="material-icons">shopping_basket</i>
@@ -116,7 +116,7 @@
                                                 <li>
                                                     <router-link
                                                         tag="li"
-                                                        to="/admin/site-product/edit"
+                                                        to="/admin/products/edit"
                                                         class="btn btn-primary btn-link btn-sm"
                                                     >
                                                         <p>Contacts</p>
@@ -199,11 +199,11 @@ export default {
             ExData: [],
             menuData: [],
             imageData: [],
-            imageUrl: "http://yildizeticaret.pw/upload/UrunResimleri/"
+            imageUrl: "http://127.0.0.1:8000/upload/UrunResimleri/"
         };
     },
     created() {
-        axios.get("/api/admin/site-product").then(response => {
+        axios.get("/api/admin/products").then(response => {
             this.ExData.push(response.data.product);
             this.menuData.push(response.data.menu);
             this.imageData.push(response.data.image);
@@ -223,21 +223,21 @@ export default {
             $("#btn_save" + id).css("display", "none");
         },
         DeleteSiteAyarlari(id) {
-            axios.delete("/api/admin/site-product/" + id)
+            axios.delete("/api/admin/products/" + id)
             .then(response=> {
                 console.log("response",response);
             })
             console.log("delete",id);
         },
         productEdit(id) {
-            this.$router.push("/admin/site-product/edit/" + id);
+            this.$router.push("/admin/products/edit/" + id);
             console.log(id);
         },
         getProductImage(productIndex, link) {
             let data = productIndex.map(item => {
                 return (
                     this.imageUrl +
-                    item.MenuAdi.toLowerCase()
+                    item.name.toLowerCase()
                         .replace(/ /g, "-")
                         .replace(/[^\w-]+/g, "") +
                     "/" +
@@ -258,14 +258,14 @@ export default {
 }
 .productAction {
     display: flex;
-   
+
 }
 .productAction li {
     list-style: none;
     margin-left: 10px;
 }
 .productAction li:first-child {
-   
+
     margin-left: 0px;
 }
 </style>

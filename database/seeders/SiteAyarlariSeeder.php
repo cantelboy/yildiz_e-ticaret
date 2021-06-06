@@ -22,7 +22,7 @@ class SiteAyarlariSeeder extends Seeder
                 'SiteKeywords' => 'En iyi fiyat ve ürün kalitee garantisi ile binlerce çeşit ürünleri ile sizlere hizmet vermek için burdayız',
                 'SiteCopyrightMetni'=> 'Copyright 2020 - Yıldız E-Ticater - Tüm Hakları Saklıdır.',
                 'SiteLogosu'=> 'Logo.png',
-                'SiteLinki'=> 'http://yildizeticaret.pw/',
+                'SiteLinki'=> 'http://127.0.0.1:8000/',
                 'SiteEmailAdresi'=> 'fplayizle3@gmail.com',
                 'SiteEmailSifresi'=> '013579tc',
                 'SiteEmailHostAdresi'=> 'smtp.gmail.com',
@@ -37,12 +37,12 @@ class SiteAyarlariSeeder extends Seeder
                 'UcretsizKargoBaraji'=> '250',
                 'ClientID'=> '00000000',
                 'StoreKey'=> '11111111',
-                'ApiKullanicisi'=> '3DKullanicim', 
+                'ApiKullanicisi'=> '3DKullanicim',
                 'ApiSifresi'=> '3DSifrem',
               ]
         );
-        
-    
+
+
     }
 }
 

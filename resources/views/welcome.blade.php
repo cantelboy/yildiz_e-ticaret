@@ -419,7 +419,6 @@
 <body class="antialiased">
 
     <div id="app">
-
         <parent-component></parent-component>
     </div>
 
@@ -429,12 +428,10 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <!----   BURDAN İTİBAREN SAYFANIN KENDİ METERİAL SCRİPTLERİ BOOTSTRAP KENDİ CDN İNDİRDİĞİM İÇİ,N KAPATTIM GEREKTİĞİNDE BAKILACAK
 
 
-    <!----   BURDAN İTİBAREN SAYFANIN KENDİ METERİAL SCRİPTLERİ BOOTSTRAP KENDİ CDN İNDİRDİĞİM İÇİ,N KAPATTIM GEREKTİĞİNDE BAKILACAK   
-
-
-    temlate klasörü içinde welcomejs.text 
+    temlate klasörü içinde welcomejs.text
 
 
 
